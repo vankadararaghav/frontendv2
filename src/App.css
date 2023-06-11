@@ -1,0 +1,53 @@
+.todo-container{
+   background-color: rgba(10, 10, 59, 0.927);
+   width:50%;
+   display: block;
+   /* border: 2px solid grey; */
+   margin: 5vh auto;
+   min-height: 70vh;
+   border-radius: 20px;
+   
+}
+
+.todo-heading{
+    display:flex;
+    justify-content: center;
+    font-size: 4vw;
+    color: white;
+}
+.todo-add{
+    display: flex;
+    justify-content: center;
+}
+.todo-button{
+    color:white;
+    background-color: green;
+    width: 100px;
+    border-radius: 5px;
+}
+.todo-input{
+    width: 70%;
+    
+    border-radius: 5px;
+}
+.todo-desc{
+    font-size: 2vw;
+    color:white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0px;
+    /* background-color: aquamarine; */
+}
+.todo-removeAll{
+    display: flex;
+    justify-content: center;
+}
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.alltasks{
+    min-height: 30vh;
+}

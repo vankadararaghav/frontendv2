@@ -1,0 +1,9 @@
+.task-container{
+    display: flex;
+    flex-direction: flex-start;
+
+}
+.task-input{
+    width: 90%;
+    
+}
