@@ -65,7 +65,7 @@ function LoginDetails(event){
             </div>
             <div className="login">
                 <div className="login-info">
-                   <p style={{fontWeight:"bold"}}>Login To <span style={{color:"green",fontSize:"20px"}}>SuperShopping</span> </p>
+                   <p style={{fontWeight:"bold"}}>Login To <span style={{color:"green",fontSize:"20px"}}>TodoList App</span> </p>
 
                    <input onChange={LoginDetails} className="input" type="text" name="email" placeholder="Email Address"/>
 

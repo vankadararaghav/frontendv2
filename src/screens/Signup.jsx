@@ -72,7 +72,7 @@ async function sendSignupRequest(){
 
                 <div className="login-info">
 
-                   <p style={{fontWeight:"bold"}}>Signup To <span style={{color:"green",fontSize:"20px"}}>SuperShopping</span> </p>
+                   <p style={{fontWeight:"bold"}}>Signup To <span style={{color:"green",fontSize:"20px"}}>TodoList</span> </p>
 
                    <input onChange={signup} className="input" type="text" name="name" placeholder="    Name"/>
 

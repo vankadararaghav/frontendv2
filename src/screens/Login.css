@@ -43,15 +43,15 @@
 }
 #login{
     margin-right: 35%;
-    min-height: 35px;
+    min-height: 6vh;
     border-radius: 20px;
     background-color: #428FA0;
 }
-
 input{
     border: 1px solid grey;
     border-radius: 5px;
-    height: 35px;
+    width: 80%;
+    height: 6vh;
 }
 input::placeholder{
     padding: 0px auto;

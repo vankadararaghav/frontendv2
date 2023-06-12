@@ -1,8 +1,10 @@
 import axios from "axios";
 
 function baseURL(){
-       axios.defaults.baseURL= "https://backendv2-production-17fe.up.railway.app/";
+    //    axios.defaults.baseURL= "https://backendv2-production-17fe.up.railway.app/";
     // axios.defaults.baseURL = 'https://basictodo2.up.railway.app/';
+       axios.defaults.baseURL = "http://localhost:5000/";
+    
 }
 function setHeaders(id){
    
