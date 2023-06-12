@@ -1,9 +1,13 @@
 .task-container{
     display: flex;
     flex-direction: flex-start;
-
+}
+.checkbox-input{
+    width: 20px;
+    margin: auto;
 }
 .task-input{
-    width: 90%;
-    
+    margin:auto;
+    width:80%;
+    color: white;
 }

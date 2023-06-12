@@ -7,7 +7,8 @@ function baseURL(){
     
 }
 function setHeaders(id){
-   
+    id= localStorage.getItem("id");
+    console.log("id in headers:" , id);
     axios.defaults.headers.common['id'] = id;
     axios.defaults.headers.post['Content-Type'] = 'application/json';
 }

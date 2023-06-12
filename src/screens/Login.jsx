@@ -32,6 +32,7 @@ async function sendLoginRequest(){
               console.log(response.data);
               if(response.data.status)
               {
+                  localStorage.setItem("id",response.data.id);
                   setHeaders(response.data.id);
                   Navigate("/App");
               }
@@ -67,9 +68,9 @@ function LoginDetails(event){
                 <div className="login-info">
                    <p style={{fontWeight:"bold"}}>Login To <span style={{color:"green",fontSize:"20px"}}>TodoList App</span> </p>
 
-                   <input onChange={LoginDetails} className="input" type="text" name="email" placeholder="Email Address"/>
+                   <input onChange={LoginDetails} className="login-input" type="text" name="email" placeholder="Email Address"/>
 
-                   <input onChange={LoginDetails} className="input" type="password" name="password" placeholder="password" />
+                   <input onChange={LoginDetails} className="login-input" type="password" name="password" placeholder="password" />
 
                    <p>Don't have an account <Link to="/">SignUp</Link></p>
 

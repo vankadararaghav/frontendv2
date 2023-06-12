@@ -10,14 +10,31 @@ function App() {
   const Navigate = useNavigate();
   const [tasks, setTasks] = useState([]);
   const [taskName, setTaskName] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 5;
-  const lastIndex = currentPage * recordsPerPage;
-  const firstIndex = lastIndex - recordsPerPage;
-  const nPages = Math.ceil(tasks.length / recordsPerPage);
-  const data = tasks.slice(firstIndex, lastIndex);
+   const [currentPage, setCurrentPage] = useState(1);
+  // const recordsPerPage = 5;
+  // const lastIndex = currentPage * recordsPerPage;
+  // const firstIndex = lastIndex - recordsPerPage;
+   const [nPages,setNpages]= useState(0);
+  // const data = tasks.slice(firstIndex, lastIndex);
   const [numbers, setNumbers] = useState([]);
 
+  useEffect(() => {
+    async function getAllData() {
+      console.log("id vlaue in LocalStorage",localStorage.getItem("id"));
+      const response = await axios.get("/getalltasks");
+      if (response.data.status) {
+        setTasks(response.data.data);
+        setNpages( response.data.nPages);
+        console.log(response.data.data);
+        
+      } else {
+        alert(response.data.message);
+        Navigate("/login");
+      }
+    }
+    getAllData();
+  }, []);
+ 
   useEffect(() => {
     console.log(nPages);
     var newArray = [];
@@ -27,22 +44,24 @@ function App() {
     }
     setNumbers(newArray);
   }, [nPages]);
-
-  useEffect(() => {
-    async function getAllData() {
-      const response = await axios.get("/getalltasks");
-      if (response.data.status) {
-        setTasks(response.data.data);
-      } else {
-        alert(response.data.message);
-        Navigate("/login");
-      }
-    }
-    getAllData();
-  }, []);
-
+ 
+ 
   // console.log("Inside the app" );
   // console.log(tasks);
+  useEffect(()=>{
+    async function currentPageRecords(){
+       
+       let response = await axios.get(`/pages/${currentPage}/${localStorage.getItem("id")}`);
+       //console.log("response In currentPage UseEffect",response);
+       if(response.data.status){
+            setTasks(response.data.data);
+       }
+       else{
+        alert(response.data.message);
+       }
+    }
+    currentPageRecords();
+  },[currentPage]);
 
   function TaskName(event) {
     // console.log(taskName);
@@ -55,11 +74,14 @@ function App() {
       // alert("request is going to send");
       var response = await axios.post("/addtask", {
         task: taskName,
+        currentPage,
       });
 
       if (response.data.status) {
         console.log("Response from Backend: ", response.data.data);
-        setTasks([...tasks, response.data.data]);
+           setTasks(response.data.data);
+           setNpages(response.data.nPages);
+        
       } else {
         alert("[adddToTask][Error]: ", response.data.message);
       }
@@ -99,6 +121,7 @@ function App() {
     const response = await axios.delete("/removeall");
     if (response.data.status) {
       setTasks([]);
+      setNpages(response.data.nPages);
     } else {
       alert(response.data.message);
     }
@@ -121,10 +144,10 @@ function App() {
   function changepage(n) {
     setCurrentPage(n);
     console.log("currentPage",currentPage);
-
   }
 
   return (
+ 
     <div className="todo-container">
       <div className="todo-heading">TODO LIST</div>
       <div className="todo-add">
@@ -142,13 +165,14 @@ function App() {
       </div>
       <p className="todo-desc">Here is your Todo List:{")"}</p>
       <div className="alltasks">
-            {data.map((eachTask) => {
+            {tasks.map((eachTask) => {
                 console.log("[eachTask]: ", eachTask);
                 return (
                 <Task
                     key={eachTask._id}
                     task={eachTask.task}
                     id={eachTask._id}
+                    isDone={eachTask.isDone}
                     updateTask={updateTask}
                     removeTask={removeTask}
                     tasks={tasks}
@@ -173,15 +197,12 @@ function App() {
                 <li className="page-item">
 
                     {
-                           currentPage===number ? <button style={{backgroundColor:"#1C1C4A"}} onClick={()=>{ changepage(number,i)}} id={i} className="page-link">
+                        currentPage===number ? <button style={{backgroundColor:"#1C1C4A"}} onClick={()=>{ changepage(number,i)}} id={i} className="page-link">
                         {number}
                       </button> :  <button onClick={()=>{ changepage(number,i)}} id={i} className="page-link">
                         {number}
                        </button>
                     }
-                   
-
-
                 </li>
             ))
           }

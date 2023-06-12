@@ -4,12 +4,12 @@ import {BrowserRouter as Router, Routes,Route} from "react-router-dom";
 import Signup from "./screens/Signup"
 import Login  from "./screens/Login"
 import App  from "./App";
-import {baseURL} from "./config/axiosBaseUrl";
+import {baseURL,setHeaders} from "./config/axiosBaseUrl";
 
 const element = document.getElementById("root");
 baseURL();
+setHeaders();
 const root  = ReactDOM.createRoot(element);
-
 root.render(
      <Router>
         <Routes>

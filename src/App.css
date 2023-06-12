@@ -22,12 +22,11 @@
 .todo-button{
     color:white;
     background-color: green;
-    width: 100px;
+    min-width: 70px;
     border-radius: 5px;
 }
 .todo-input{
     width: 70%;
-    
     border-radius: 5px;
 }
 .todo-desc{
@@ -36,8 +35,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 20px 0px;
-    /* background-color: aquamarine; */
 }
 .todo-removeAll{
     display: flex;

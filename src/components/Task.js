@@ -2,21 +2,48 @@ import React from "react";
 import "./Task.css"
 import {useState} from "react";
 import axios from "axios";
-
+import "./Task.css";
+import {useEffect} from "react";
 
 function Task(props){
     // var Navigate = useNavigate();
      //const [value,setValue] = useState(props.task);
     const [editvalue, setEditValue] = useState(props.task);
+    const [check,setCheck] = useState(props.isDone);
+
+    useEffect(()=>{
+       document.getElementById(props.id).checked= check;
+       if(check===true)
+       {
+         document.getElementById("p"+props.id).style.textDecoration="line-through";
+       }
+       if(check===false)
+       {
+        document.getElementById("p"+props.id).style.textDecoration="none";
+       }
+       console.log("useEffect",check);
+    },[check]);
+
     console.log("propValues: ", props.task);
     function editValueChange(event){
       setEditValue(event.target.value);
-      //  console.log(editvalue);
+      
     }
-
+    async function toggleCheck(){
+         
+         var response = await axios.put("/checkbox",{
+          "task_id": props.id,
+           "checked": !check,
+         });
+         if(response.data.status)
+         {   
+             setCheck(!check);
+         }
+         else{
+            alert(response.data.message);
+         }
+    }
     async function edit(event){
-      // alert("request is going to send");
-      // alert(editvalue);
       if(editvalue){
       var response = await axios.put("/editdata",{
                                           "task": editvalue,
@@ -48,7 +75,9 @@ function Task(props){
     }
     return (
       <div className="task-container">
-          <input className="task-input" type="text" value={props.task} id={props.id}/>
+          <input onChange={toggleCheck}  type="checkbox"  id={props.id} className="checkbox-input" />
+          <p style={{fontSize:"20px"}} id={"p"+props.id}className="task-input" >{props.task}</p>
+          {/* <input className="task-input" type="text" value={props.task} id={props.id}/> */}
           <button  className="todo-button" data-toggle="modal" data-target={"#x"+props.id}>Edit</button>
           <div className="modal fade" id={"x"+props.id} role="dialog">
              <div className="modal-dialog">
@@ -71,5 +100,4 @@ function Task(props){
       </div>
     );
 }
-
 export default Task;
