@@ -78,10 +78,26 @@ function Task(props){
 
     async function remove(){
       console.log(props.id);  
-      var response = await axios.delete("/removetask/"+props.id);
+      var response = await axios.delete("/removetask/"+props.id+"/"+props.currentPage);
       if (response.data.status){
           console.log("after successful Removing" , response.data);
-          props.removeTask(props.id,response.data.nPages);
+          var response_data = await axios.get("/pages/"+props.currentPage+"/"+props.id);
+          console.log("data after deleting",response.data.data);
+          if(response_data.data.status){
+            console.log("response after deleting",response_data);
+            props.removeTask(props.id,response_data.data.data,response.data.nPages);
+          }
+          else{
+            if(response_data.data.message==="Please Login")
+            {
+               Navigate("/");
+            }
+        else{
+          alert(response.data.message);
+        }
+             
+          }
+         
       }
       else {
         if(response.data.message==="Please Login")

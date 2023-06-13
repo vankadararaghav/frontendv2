@@ -6,6 +6,7 @@
    margin: 5vh auto;
    min-height: 70vh;
    border-radius: 20px;
+   padding: 15px;
    
 }
 .header{
@@ -29,10 +30,12 @@
     background-color: green;
     min-width: 70px;
     border-radius: 5px;
+    padding: 10px;
 }
 .todo-input{
     width: 70%;
     border-radius: 5px;
+    padding: 15px;
 }
 .todo-desc{
     font-size: 2vw;
@@ -49,6 +52,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 15px;
 }
 .alltasks{
     min-height: 30vh;

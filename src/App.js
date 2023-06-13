@@ -120,13 +120,16 @@ function App() {
     console.log("[App.js][newTask]: ", newTasks);
     setTasks(newTasks);
   }
-  function removeTask(id,Npages) {
+  function removeTask(id,data,Npages) {
+
+    console.log("data in app.js after deleting",data);
     console.log("Removing task" + id);
-    setTasks((prevTasks) => {
-      const newTasks = prevTasks.filter((task) => task._id !== id);
-      console.log(newTasks);
-      return newTasks;
-    });
+    // setTasks((prevTasks) => {
+    //   const newTasks = prevTasks.filter((task) => task._id !== id);
+    //   console.log(newTasks);
+    //   return newTasks;
+    // });
+    setTasks(data);
     if(Npages!=nPages)
     {
        setCurrentPage(nPages-1);
@@ -203,6 +206,7 @@ function App() {
                     task={eachTask.task}
                     id={eachTask._id}
                     isDone={eachTask.isDone}
+                    currentPage={currentPage}
                     updateTask={updateTask}
                     removeTask={removeTask}
                     tasks={tasks}
