@@ -3,10 +3,11 @@ import "./Task.css"
 import {useState} from "react";
 import axios from "axios";
 import "./Task.css";
+import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 
 function Task(props){
-    // var Navigate = useNavigate();
+    const Navigate = useNavigate();
      //const [value,setValue] = useState(props.task);
     const [editvalue, setEditValue] = useState(props.task);
     const [check,setCheck] = useState(props.isDone);
@@ -40,7 +41,13 @@ function Task(props){
              setCheck(!check);
          }
          else{
+          if(response.data.message==="Please Login")
+          {
+            Navigate("/");
+          }
+          else{
             alert(response.data.message);
+          }
          }
     }
     async function edit(event){
@@ -54,7 +61,14 @@ function Task(props){
         props.updateTask(props.id,editvalue);
       }
       else {
-        alert('[updateValue][Error]: ' + response.data.message);
+        if(response.data.message==="Please Login")
+        {
+          Navigate("/");
+        }
+        else{
+          alert('[updateValue][Error]: ' + response.data.message);
+        }
+        
       }
     }
     else{
@@ -66,11 +80,17 @@ function Task(props){
       console.log(props.id);  
       var response = await axios.delete("/removetask/"+props.id);
       if (response.data.status){
-          alert(response.data.message);
-          props.removeTask(props.id);
+          console.log("after successful Removing" , response.data);
+          props.removeTask(props.id,response.data.nPages);
       }
       else {
+        if(response.data.message==="Please Login")
+        {
+          Navigate("/");
+        }
+        else{
           alert(response.data.message);
+        }
       }
     }
     return (

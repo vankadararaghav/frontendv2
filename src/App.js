@@ -28,8 +28,13 @@ function App() {
         console.log(response.data.data);
         
       } else {
-        alert(response.data.message);
-        Navigate("/login");
+        if(response.data.message==="Please Login")
+        {
+          Navigate("/");
+        }
+        else{
+          alert(response.data.message);
+        }
       }
     }
     getAllData();
@@ -54,10 +59,16 @@ function App() {
        let response = await axios.get(`/pages/${currentPage}/${localStorage.getItem("id")}`);
        //console.log("response In currentPage UseEffect",response);
        if(response.data.status){
-            setTasks(response.data.data);
+        setTasks(response.data.data);
        }
        else{
-        alert(response.data.message);
+        if(response.data.message==="Please Login")
+        {
+          Navigate("/");
+        }
+        else{
+          alert( response.data.message);
+        }
        }
     }
     currentPageRecords();
@@ -83,7 +94,14 @@ function App() {
            setNpages(response.data.nPages);
         
       } else {
-        alert("[adddToTask][Error]: ", response.data.message);
+        if(response.data.message==="Please Login")
+        {
+          Navigate("/");
+        }
+        else{
+          alert(response.data.message);
+        }
+        
       }
     } else {
       alert("Enter some task");
@@ -102,13 +120,18 @@ function App() {
     console.log("[App.js][newTask]: ", newTasks);
     setTasks(newTasks);
   }
-  function removeTask(id) {
+  function removeTask(id,Npages) {
     console.log("Removing task" + id);
     setTasks((prevTasks) => {
       const newTasks = prevTasks.filter((task) => task._id !== id);
       console.log(newTasks);
       return newTasks;
     });
+    if(Npages!=nPages)
+    {
+       setCurrentPage(nPages-1);
+    }
+    setNpages(Npages);
     console.log("Tasks after removing");
     console.log(tasks);
   }
@@ -145,9 +168,16 @@ function App() {
     setCurrentPage(n);
     console.log("currentPage",currentPage);
   }
+  function removeSession(){
+      localStorage.removeItem("id");
+      Navigate("/");
+  }
 
   return (
- 
+  <div>
+    <div className="header">
+        <button onClick={removeSession} style={{width:"70px"}}id="logout/">logout</button>
+    </div>
     <div className="todo-container">
       <div className="todo-heading">TODO LIST</div>
       <div className="todo-add">
@@ -214,6 +244,7 @@ function App() {
         </ul>
       </div>
     </div>
+  </div>
   );
 }
 
